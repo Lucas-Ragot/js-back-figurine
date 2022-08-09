@@ -1,0 +1,102 @@
+<%- include('./partials/header') %>
+
+  <!-- Page Content -->
+  <div class="container container-main">
+
+    <div class="row">
+
+        <div class="col-lg-3">
+
+            <h1 class="my-4">O'Fig</h1>
+            <%- include('./partials/leftMenu') %>
+    
+          </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+
+        <div class="row">
+          <div class="col-lg-6">
+            <img class="" src="/images/<%= figurine.name.toLowerCase()%>.png" alt="">
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                  <h3 class="card-title">
+                    <%= figurine.name %>
+                    <div class="badge badge-pill badge-<%= figurine.category.toLowerCase() %>"><%= figurine.category %></div>
+                  </h3>
+                  <p class="card-text">Taille réelle : <%= figurine.size %>cm</p>
+                  <p class="card-text"><%= figurine.description %></p>
+                  <p class="card-text">
+                    Note moyenne : 
+                    <% for(let note = 1; note <= 5; note ++){ %>
+                      <% if(note <= figurine.note){ %>
+                        &#9733;
+                      <% } else { %>
+                        &#9734;
+                      <% } %>
+                    <% } %>
+                    <br>
+                    <a href="#" data-toggle="modal" data-target="#reviewsModal">Détails des avis</a>
+                  </p>
+                  <h5>$<%= figurine.price %></h5>
+                  <p class="card-text">
+                    <a href="/bookmarks/add/<%= figurine.id %>" class="link-add-bookmarks">+ Ajouter aux favoris</a>
+                  </p>
+              </div>
+            </div>
+          
+          </div>
+
+        </div>
+        <!-- /.row -->
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- Modale des avis -->
+  <div class="modal fade" id="reviewsModal" tabindex="-1" role="dialog" aria-labelledby="reviewsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="reviewsModalLabel">Avis des internautes</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <% for (const review of reviews) { %>
+           
+          <section>
+            <h5><%=review.title %> &nbsp; 
+              <small class="text-muted">
+                <% for(let note = 1; note <= 5; note ++){ %>
+                  <% if(note <= review.note){ %>
+                    &#9733;
+                  <% } else { %>
+                    &#9734;
+                  <% } %>
+                <% } %>
+              </small></h5>
+            <p class="review-author">par <%= review.author %></p>
+            <p><%= review.message %></p>
+          </section>
+
+          <hr>
+          <% } %>
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.container -->
+  <%- include('./partials/footer') %>
